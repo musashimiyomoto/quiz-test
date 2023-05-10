@@ -41,6 +41,7 @@ def start_quiz(request, quiz_id):
 def question(request, quiz_id, question_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     question = get_object_or_404(Question, pk=question_id)
+    quiz_taker = get_object_or_404(QuizTaker, user=request.user, quiz=quiz)
 
     if request.method == 'POST':
         selected_choices = request.POST.getlist('choice[]')
@@ -51,21 +52,26 @@ def question(request, quiz_id, question_id):
                 if not choice.is_correct:
                     is_correct = False
 
-            quiz_taker = get_object_or_404(QuizTaker, user=request.user, quiz=quiz)
-            quiz_taker.current_question = question
+            next_question = question.get_next_question()
+            quiz_taker.current_question = next_question
 
             if is_correct:
                 quiz_taker.correct_answers += 1
 
             quiz_taker.save()
 
-            next_question = question.get_next_question()
             if next_question:
                 return redirect('quiz:question', quiz_id=quiz_id, question_id=next_question.pk)
             else:
                 quiz_taker.completed = True
                 quiz_taker.save()
                 return redirect('quiz:result', quiz_id=quiz_id)
+
+    if question != quiz_taker.current_question:
+        if quiz_taker.current_question:
+            return redirect('quiz:question', quiz_id=quiz_id, question_id=quiz_taker.current_question.pk)
+        else:
+            return redirect('quiz:start', quiz_id=quiz_id)
 
     context = {'quiz': quiz, 'question': question}
 
