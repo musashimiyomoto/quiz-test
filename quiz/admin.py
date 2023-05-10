@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.forms import BaseInlineFormSet
-from .models import Quiz, Question, Choice
+
+from quiz.models import (Quiz,
+                         Question,
+                         Choice)
 
 
 class ChoiceInlineFormSet(BaseInlineFormSet):
@@ -12,14 +15,15 @@ class ChoiceInlineFormSet(BaseInlineFormSet):
             if form.cleaned_data.get('is_correct'):
                 correct_count += 1
         if correct_count == 0:
-            raise ValidationError("At least one choice must be marked as correct.")
+            raise ValidationError('At least one choice must be marked as correct.')
         if correct_count == len(self.forms):
-            raise ValidationError("All choices cannot be marked as correct.")
+            raise ValidationError('All choices cannot be marked as correct.')
 
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 1
+    min_num = 2
     formset = ChoiceInlineFormSet
 
 

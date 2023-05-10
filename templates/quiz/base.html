@@ -2,13 +2,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Тестовый сервис</title>
+    <title>Quiz platform</title>
 </head>
 <body>
 {% if user.is_authenticated %}
-    <p>Привет, {{ user.username }}! <a href="{% url 'logout' %}">Выйти</a></p>
+    <p>Hi, {{ user.username }}! <a href="{% url 'logout' %}">Exit</a></p>
 {% else %}
-    <p><a href="{% url 'login' %}">Войти</a></p>
+    <p><a href="{% url 'login' %}">Log In</a></p>
 {% endif %}
 {% block content %}
 {% endblock %}

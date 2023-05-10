@@ -1,11 +1,11 @@
 {% extends 'quiz/base.html' %}
 
 {% block content %}
-    <h1>Результаты</h1>
-    <p>Тест: {{ quiz.title }}</p>
-    <p>Количество правильных ответов: {{ correct_answers }}</p>
-    <p>Количество неправильных ответов: {{ not_correct_answers }}</p>
-    <p>Процент правильных ответов: {{ percentage }}%</p>
+     <h1>Results</h1>
+     <p>Test: {{ quiz.title }}</p>
+     <p>Number of correct answers: {{ correct_answers }}</p>
+     <p>Number of incorrect answers: {{ not_correct_answers }}</p>
+     <p>Percentage of correct answers: {{ percentage }}%</p>
 
-    <button><a href="../../">Вернуться в квизам</a></button>
+    <button><a href="../../">Back to the list of quizzes</a></button>
 {% endblock %}

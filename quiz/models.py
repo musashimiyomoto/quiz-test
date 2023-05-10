@@ -42,4 +42,4 @@ class QuizTaker(models.Model):
     current_question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f"{self.user.username} - {self.quiz.title}"
+        return f'{self.user.username} - {self.quiz.title}'

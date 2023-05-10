@@ -19,12 +19,12 @@ class LogIn(LoginView):
 
         user_obj = User.objects.filter(username=username).first()
         if user_obj is None:
-            messages.success(request=request, message="Пользователь не найден!!!")
+            messages.success(request=request, message='User is not found!')
             return redirect('login')
 
         user = authenticate(username=username, password=password)
         if user is None:
-            messages.success(request=request, message="Введен неверный пароль")
+            messages.success(request=request, message='Wrong password entered!')
             return redirect('login')
 
         login(request=request, user=user)
@@ -33,14 +33,14 @@ class LogIn(LoginView):
             self.request.session.set_expiry(0)
             self.request.session.modified = True
 
-        messages.success(request=request, message="Success")
+        messages.success(request=request, message='Success')
 
         return redirect('quiz/')
 
 
 class SignUp(CreateView):
     model = User
-    fields = "__all__"
+    fields = '__all__'
     template_name = 'register.html'
     success_url = reverse_lazy('login')
 
@@ -54,15 +54,15 @@ class SignUp(CreateView):
             last_name = request.POST.get('lastname')
 
             if password1 != password2:
-                messages.success(request, 'Пароли в обоих полях паролей не совпадают!!!')
+                messages.success(request, 'Passwords in both password fields do not match!')
                 return redirect('signup')
 
             if User.objects.filter(username=username).first():
-                messages.success(request, "Этот пользователь уже зарегистрирован!!!")
+                messages.success(request, 'This user is already registered!')
                 return redirect('signup')
 
             if User.objects.filter(email=email).first():
-                messages.success(request, "Эта электронная почта уже зарегистрирована!!!")
+                messages.success(request, 'This email is already registered!')
                 return redirect('signup')
 
             user_obj = User.objects.create(
@@ -75,7 +75,7 @@ class SignUp(CreateView):
             user_obj.save()
             return redirect('login')
         except Exception as e:
-            messages.error(request, f"Ошибка {e}")
+            messages.error(request, f'Error {e}')
             return redirect('signup')
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Quiz
+from quiz.models import Quiz
 
 
 class QuizForm(forms.ModelForm):
