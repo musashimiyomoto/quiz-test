@@ -1,0 +1,17 @@
+{% extends 'quiz/base.html' %}
+
+{% block content %}
+    <h1>Список тестов</h1>
+    <hr>
+    {% for category in categories %}
+        <h4>{{ category }}</h4>
+        <ul>
+            {% for quiz in quizzes %}
+                {% if quiz.category == category %}
+                    <li><a href="{% url 'quiz:start' quiz.id %}">{{ quiz.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <hr>
+    {% endfor %}
+{% endblock %}
